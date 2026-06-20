@@ -16,10 +16,10 @@ private class DataHygieneDashboardControllerTest {
         }
 
         List<Lead> messyLeads = new List<Lead>{
-            buildLead(' jOhN ', 'SMITH', ' john.smith@example.com ', '5551234', 'new york', 'ny', 'Dirty'),
-            buildLead('mARIA', 'GONZALEZ', ' maria@example.com ', '(404)-555 8899', 'atlanta', 'ga', 'Dirty'),
-            buildLead('  bob  ', 'LEE', null, '123', null, 'ca', null),
-            buildLead('SUE', 'PARK', 'sue@example.com', '9876543210', 'chicago', 'il', 'Dirty')
+            buildLead(' jOhN ', 'SMITH', ' john.smith@example.com ', '5551234', 'new york', 'New York', 'Dirty'),
+            buildLead('mARIA', 'GONZALEZ', ' maria@example.com ', '(404)-555 8899', 'atlanta', 'Georgia', 'Dirty'),
+            buildLead('  bob  ', 'LEE', null, '123', null, 'California', null),
+            buildLead('SUE', 'PARK', 'sue@example.com', '9876543210', 'chicago', 'Illinois', 'Dirty')
         };
         insert messyLeads;
     }
@@ -91,7 +91,7 @@ private class DataHygieneDashboardControllerTest {
 
     @IsTest
     static void testApplyHygieneRulesMarksNeedsReviewForBadPhone() {
-        Lead messyLead = buildLead(' ann ', 'TAYLOR', 'ann@example.com', 'call-me', 'boston', 'ma', 'Dirty');
+        Lead messyLead = buildLead(' ann ', 'TAYLOR', 'ann@example.com', 'call-me', 'boston', 'Massachusetts', 'Dirty');
         insert messyLead;
 
         Test.startTest();
@@ -121,7 +121,8 @@ private class DataHygieneDashboardControllerTest {
             Email = ' AMY@EXAMPLE.COM ',
             Phone = '2125550199',
             City = 'san francisco',
-            State = 'ca',
+            State = 'California',
+            Country = 'United States',
             Company = 'Test Co'
         );
 
@@ -131,7 +132,7 @@ private class DataHygieneDashboardControllerTest {
         System.assertEquals('Wong', cleanedLead.LastName);
         System.assertEquals('amy@example.com', cleanedLead.Email);
         System.assertEquals('San Francisco', cleanedLead.City);
-        System.assertEquals('CA', cleanedLead.State);
+        System.assertEquals('CALIFORNIA', cleanedLead.State);
         System.assertEquals('Cleaned', cleanedLead.Hygiene_Status__c);
     }
 
@@ -151,6 +152,7 @@ private class DataHygieneDashboardControllerTest {
             Phone = phone,
             City = city,
             State = state,
+            Country = 'United States',
             Company = 'Hygiene Test Co'
         );
         leadRecord.Hygiene_Status__c = hygieneStatus;

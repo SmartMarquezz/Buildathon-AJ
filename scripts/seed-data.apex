@@ -6,7 +6,8 @@ List<Lead> messyLeads = new List<Lead>{
         Email = ' john.smith@example.com ',
         Phone = '5551234',
         City = 'new york',
-        State = 'ny',
+        State = 'New York',
+        Country = 'United States',
         Hygiene_Status__c = 'Dirty',
         Hygiene_Score__c = 35
     ),
@@ -17,7 +18,8 @@ List<Lead> messyLeads = new List<Lead>{
         Email = ' maria@example.com ',
         Phone = '(404)-555 8899',
         City = 'atlanta',
-        State = 'ga',
+        State = 'Georgia',
+        Country = 'United States',
         Hygiene_Status__c = 'Dirty',
         Hygiene_Score__c = 42
     ),
@@ -28,7 +30,8 @@ List<Lead> messyLeads = new List<Lead>{
         Email = 'ROBERT@EXAMPLE.COM',
         Phone = '2125559876',
         City = '  san francisco  ',
-        State = 'ca',
+        State = 'California',
+        Country = 'United States',
         Hygiene_Status__c = 'Dirty',
         Hygiene_Score__c = 38
     ),
@@ -39,7 +42,8 @@ List<Lead> messyLeads = new List<Lead>{
         Email = 'sarah.oneill@example.com',
         Phone = '1-773-555-4422',
         City = 'chicago',
-        State = 'IL',
+        State = 'Illinois',
+        Country = 'United States',
         Hygiene_Status__c = null,
         Hygiene_Score__c = 30
     ),
@@ -50,7 +54,8 @@ List<Lead> messyLeads = new List<Lead>{
         Email = 'dave@example.com',
         Phone = 'call-me-now',
         City = null,
-        State = 'tx',
+        State = 'Texas',
+        Country = 'United States',
         Hygiene_Status__c = 'Dirty',
         Hygiene_Score__c = 25
     ),
@@ -61,7 +66,8 @@ List<Lead> messyLeads = new List<Lead>{
         Email = '  lisa.nguyen@example.com  ',
         Phone = '9876543210',
         City = 'miami',
-        State = 'fl',
+        State = 'Florida',
+        Country = 'United States',
         Hygiene_Status__c = null,
         Hygiene_Score__c = 40
     )
