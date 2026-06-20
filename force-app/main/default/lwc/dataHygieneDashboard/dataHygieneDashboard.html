@@ -1,0 +1,132 @@
+<template>
+    <div class="dashboard-container">
+        <lightning-card title="🧼 Data Hygiene Dashboard" icon-name="standard:lead">
+            <div class="stats-bar">
+                <div class="stat-card blue">
+                    <p class="stat-label">Records Scanned</p>
+                    <p class="stat-value">{recordsScanned}</p>
+                </div>
+                <div class="stat-card red">
+                    <p class="stat-label">Dirty Records</p>
+                    <p class="stat-value">{dirtyRecords}</p>
+                </div>
+                <div class="stat-card green">
+                    <p class="stat-label">Cleaned Today</p>
+                    <p class="stat-value">{cleanedToday}</p>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="left-panel">
+                    <div class="panel-header">
+                        <h2>Records Needing Cleanup</h2>
+                        <lightning-button-icon
+                            icon-name="utility:refresh"
+                            alternative-text="Refresh"
+                            title="Refresh"
+                            onclick={handleRefresh}
+                            disabled={isLoading}
+                        ></lightning-button-icon>
+                    </div>
+
+                    <template if:true={isLoading}>
+                        <div class="spinner-container">
+                            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                        </div>
+                    </template>
+
+                    <template if:false={isLoading}>
+                        <template if:true={hasLeads}>
+                            <div class="record-list">
+                                <template for:each={leadsWithClasses} for:item="lead">
+                                    <article
+                                        key={lead.Id}
+                                        class={lead.cardClass}
+                                        data-id={lead.Id}
+                                        onclick={handleLeadSelect}
+                                    >
+                                        <div class="record-title">{lead.Name}</div>
+                                        <div class="record-line">{lead.Email}</div>
+                                        <div class="record-line">{lead.Phone}</div>
+                                        <div class="record-line">{lead.locationLabel}</div>
+                                        <div class="badge-row">
+                                            <span class={lead.statusClass}>{lead.statusLabel}</span>
+                                            <template if:true={lead.hasScore}>
+                                                <span class="badge badge-score">Score {lead.Hygiene_Score__c}</span>
+                                            </template>
+                                        </div>
+                                    </article>
+                                </template>
+                            </div>
+                        </template>
+                        <template if:false={hasLeads}>
+                            <div class="empty-state">
+                                <lightning-icon icon-name="utility:check" size="large"></lightning-icon>
+                                <p>All clean! No records need attention right now.</p>
+                            </div>
+                        </template>
+                    </template>
+                </div>
+
+                <div class="right-panel">
+                    <template if:false={hasSelectedLead}>
+                        <div class="placeholder">
+                            <lightning-icon icon-name="utility:preview" size="large"></lightning-icon>
+                            <p>Select a record to review and clean.</p>
+                        </div>
+                    </template>
+
+                    <template if:true={hasSelectedLead}>
+                        <div class="detail-card">
+                            <div class="detail-header">
+                                <div>
+                                    <h2>{selectedLead.Name}</h2>
+                                    <p>{selectedLead.Email}</p>
+                                </div>
+                                <div class="badge-row">
+                                    <span class={selectedStatusClass}>{selectedStatusLabel}</span>
+                                    <template if:true={selectedLeadHasScore}>
+                                        <span class="badge badge-score">Score {selectedLead.Hygiene_Score__c}</span>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <div class="issues-section">
+                                <h3>Issues</h3>
+                                <p>{issuesDescription}</p>
+                            </div>
+
+                            <div class="action-row">
+                                <lightning-button
+                                    variant="brand"
+                                    label="Clean Selected Record"
+                                    onclick={handleCleanSelected}
+                                    disabled={isCleaning}
+                                ></lightning-button>
+                                <lightning-button
+                                    variant="neutral"
+                                    label="Clean All Dirty Records"
+                                    onclick={handleCleanAll}
+                                    disabled={isCleaning}
+                                ></lightning-button>
+                            </div>
+
+                            <template if:true={isCleaning}>
+                                <div class="spinner-container">
+                                    <lightning-spinner alternative-text="Cleaning" size="small"></lightning-spinner>
+                                </div>
+                            </template>
+
+                            <template if:true={resultMessage}>
+                                <div class="result-panel">
+                                    <lightning-icon icon-name="utility:success" size="small"></lightning-icon>
+                                    <p>{resultMessage}</p>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </lightning-card>
+    </div>
+</template>
