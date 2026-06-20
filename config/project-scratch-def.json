@@ -1,0 +1,9 @@
+{
+  "orgName": "VibeForce Build",
+  "edition": "Developer",
+  "features": ["SalesUser", "DevelopmentWave"],
+  "settings": {
+    "lightningExperienceSettings": { "enableS1DesktopEnabled": true },
+    "mobileSettings": { "enableS1EncryptedStoragePref2": false }
+  }
+}
